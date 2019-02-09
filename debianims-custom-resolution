@@ -1,0 +1,35 @@
+#!/bin/bash
+# https://askubuntu.com/questions/377937/how-to-set-a-custom-resolution
+# https://superuser.com/questions/1210856/startup-script-with-lightdm-xprofile-is-not-loaded
+echo ""
+echo "Read the instructions in this script"
+echo ""
+exit 0
+
+# --- Instructions by example done on a Pentium 4 with VGA to TV:
+
+# Find output name
+
+xrandr -q
+
+# With cvt create xrandr commands
+
+cvt 1280 720 60
+
+  xrandr --newmode "1280x720_60.00"   74.50  1280 1344 1472 1664  720 723 728 748 -hsync +vsync
+  xrandr --addmode DVI-0 1280x720_60.00
+
+cvt 1920 1080 60
+
+  xrandr --newmode "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+  xrandr --addmode DVI-0 1920x1080_60.00
+
+# Put the commands in ~/.xsessionrc (~/.xprofile does not work in Debian)
+
+nano ~/.xsessionrc
+
+#!/bin/bash
+xrandr --newmode "1280x720_60.00"   74.50  1280 1344 1472 1664  720 723 728 748 -hsync +vsync
+xrandr --addmode DVI-0 1280x720_60.00
+xrandr --newmode "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+xrandr --addmode DVI-0 1920x1080_60.00
