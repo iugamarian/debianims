@@ -1,0 +1,16 @@
+#!/bin/bash
+echo ""
+echo "Read the instructions in this script"
+echo ""
+exit 0
+# https://askubuntu.com/questions/912700/how-to-skip-login-screen-on-lubuntu-17-04-lxqt
+
+# Turns out I was having trouble because LXQt is not using lightdm to login, it is using SDDM, so I created a configuration file at /etc/sddm.conf:
+
+nano /etc/sddm.conf
+
+# and added the following text to it, username = your user name:
+
+[Autologin]
+User=username
+Session=lxqt.desktop
