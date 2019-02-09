@@ -29,7 +29,7 @@ EOF
 # --- Make /tmp reside in tmpfs.
 
 # Remove /tmp in tmpfs if already in
-sed -i 's/\rtmpfs           \/tmp            tmpfs  nodev,nosuid,mode=1777     0 0//g' /etc/fstab
+sed -i 's/tmpfs           \/tmp            tmpfs  nodev,nosuid,mode=1777     0 0//g' /etc/fstab
 # and remove multiple newlines (VERY COMPLICATED !!!)
 # https://stackoverflow.com/questions/922449/how-can-i-replace-multiple-empty-lines-with-a-single-empty-line-in-bash
 sed -i 'N;/^\n$/D;P;D;' /etc/fstab
