@@ -46,6 +46,17 @@ fi
 rm -rf /home/$USER/.cache/mozilla
 ln -s /tmp /home/$USER/.cache/mozilla
 
+# Configure mpv for hardware decoding on Intel and Amd and Ati graphic cards
+# Put vdpau instead of vaapi if you have proprietary nvidia drivers
+mkdir -p /home/$USER/.config/mpv
+cat <<EOF > /home/$USER/.config/mpv/mpv.conf
+hwdec=vaapi
+vo=vaapi
+save-position-on-quit
+audio-normalize-downmix=yes
+volume=100
+EOF
+
 # --- Done.
 
 sync
