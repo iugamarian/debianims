@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Script to improve performance and endurance for Debian with SystemD (Debian 9+).
+# Crafted to be repeatedly run without issues.
+
+# --- Run as your user.
+
+if [[ ${EUID} -eq 0 ]]; then
+  echo ""
+  echo "Run this one as your user, not as root."
+  echo ""
+  exit 1
+fi
+
+# --- Asking for wait.
+
+echo ""
+echo "Working, please wait..."
+echo ""
+
+# --- Mozilla Firefox needs to be closed
+
+ps -ef | grep -v grep | grep -q firefox
+if [ $? -eq 0 ]
+then
+  echo ""
+  echo "Mozilla Firefox is open. Closing it in:"
+  echo ""
+  sleep 1
+  echo "3"
+  echo ""
+  sleep 1
+  echo "2"
+  echo ""
+  sleep 1
+  echo "1"
+  echo ""
+  sleep 1
+  killall -e /usr/lib/firefox-esr/firefox-esr
+  sync
+  sleep 1
+fi
+
+# --- Mozilla Firefox cache in /tmp
+
+rm -rf /home/$USER/.cache/mozilla
+ln -s /tmp /home/$USER/.cache/mozilla
+
+# --- Done.
+
+sync
+echo ""
+echo "No reboot required. Done."
+echo ""
