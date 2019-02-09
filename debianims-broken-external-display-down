@@ -1,0 +1,8 @@
+#!/bin/bash
+# Creates an unused band down on the display
+# The error messages are required or the external
+# display will reposition to accomodate the
+# cut down resolution and not allow unused band
+xrandr --output LVDS1 --off
+xrandr --output VGA1 --panning 1280x1800
+xrandr --output VGA1 --fb 1280x850
