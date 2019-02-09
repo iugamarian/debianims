@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# Script to improve performance and endurance for Debian with SystemD (Debian 9+).
+# Crafted to be repeatedly run without issues.
+
+# --- Run as root.
+
+if [[ ${EUID} -ne 0 ]]; then
+  echo ""
+  echo "Run this one as root, not as a user."
+  echo ""
+  exit 1
+fi
+
+# --- Asking for wait.
+
+echo ""
+echo "Working, please wait..."
+echo ""
+
+# --- Save to storage after maximum  6 seconds.
+
+mkdir -p /etc/sysctl.d
+cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
+vm.dirty_writeback_centisecs = 600
+vm.dirty_expire_centisecs = 600
+EOF
+
+# --- Make /tmp reside in tmpfs.
+
+# Remove /tmp in tmpfs if already in
+sed -i 's/\rtmpfs           \/tmp            tmpfs  nodev,nosuid,mode=1777     0 0//g' /etc/fstab
+# and remove multiple newlines (VERY COMPLICATED !!!)
+# https://stackoverflow.com/questions/922449/how-can-i-replace-multiple-empty-lines-with-a-single-empty-line-in-bash
+sed -i 'N;/^\n$/D;P;D;' /etc/fstab
+# Add /tmp in tmpfs in /etc/fstab
+echo "" >> /etc/fstab
+echo "tmpfs           /tmp            tmpfs  nodev,nosuid,mode=1777     0 0" >> /etc/fstab
+
+# --- Enable zram swap and disable storage swap.
+
+# Write /usr/bin/zramims and make executable
+# https://github.com/novaspirit/rpi_zram
+cat <<EOF > /usr/bin/zramims
+#!/bin/bash
+cores=$(nproc --all)
+modprobe zram num_devices=$cores
+swapoff -a
+totalmem=`free | grep -e "^Mem:" | awk '{print $2}'`
+mem=$(( ($totalmem / $cores)* 1024 ))
+core=0
+while [ $core -lt $cores ]; do
+  echo $mem > /sys/block/zram$core/disksize
+  mkswap /dev/zram$core
+  swapon -p 5 /dev/zram$core
+  let core=core+1
+done
+EOF
+chmod +x /usr/bin/zramims
+# Write /etc/rc.local and make executable
+cat <<EOF > /etc/rc.local
+#!/bin/sh -e
+/usr/bin/zramims &
+exit 0
+EOF
+chmod +x /etc/rc.local
+# Enable rc.local in SystemD
+# https://www.itechlounge.net/2017/10/linux-how-to-add-rc-local-in-debian-9/
+cat <<EOF > /etc/systemd/system/rc-local.service
+[Unit]
+Description=/etc/rc.local
+ConditionPathExists=/etc/rc.local
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sync
+sleep 1
+systemctl enable rc-local
+
+# --- Done.
+
+sync
+echo ""
+echo "Reboot is required. Done."
+echo ""
