@@ -5,7 +5,7 @@ echo ""
 exit 0
 # https://wiki.archlinux.org/index.php/PCManFM#No_icons
 # Tip: For an alternative GUI solution, install lxappearance and apply an icon theme from there.
-# apt install -y lxappearance
+# The qt version of Appearance is already installed on Debian LXQT
 # Start -> Preferences -> LXQT Settings -> Appearance -> Select by clicking on theme
 # https://github.com/lxqt/pcmanfm-qt/issues/77
 # PCMANFM Edit -> Preferences -> Behaviour -> Select "Compact list"
