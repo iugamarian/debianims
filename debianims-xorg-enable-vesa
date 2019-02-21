@@ -1,0 +1,25 @@
+#!/bin/bash
+# https://askubuntu.com/questions/377937/how-to-set-a-custom-resolution
+# https://superuser.com/questions/1210856/startup-script-with-lightdm-xprofile-is-not-loaded
+echo ""
+echo "Read the instructions in this script"
+echo ""
+exit 0
+
+# https://forums.linuxmint.com/viewtopic.php?t=266554
+
+# As root, only if no video driver works (Via Chrome 9 for example):
+
+# Make xorg create an xorg.conf
+xorg :1 -configure
+
+# Test it without making it permanent
+X -config /root/xorg.conf.new
+
+# Replace after Card 0 the driver with "vesa":
+nano /root/xorg.conf.new
+
+# Move it to it's default location:
+mv /root/xorg.conf.new /etc/X11/xorg.conf
+
+reboot
