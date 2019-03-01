@@ -18,10 +18,11 @@ echo ""
 echo "Working, please wait..."
 echo ""
 
-# --- Save to storage after maximum  6 seconds.
+# --- Swap minimum usage and save to storage after maximum  6 seconds.
 
 mkdir -p /etc/sysctl.d
 cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
+vm.swappiness = 1
 vm.dirty_writeback_centisecs = 600
 vm.dirty_expire_centisecs = 600
 EOF
