@@ -18,11 +18,12 @@ echo ""
 echo "Working, please wait..."
 echo ""
 
-# --- Swap minimum usage and save to storage after maximum  6 seconds.
+# --- Swap minimum usage, kill processes requesting too much RAM and save to storage after maximum  6 seconds.
 
 mkdir -p /etc/sysctl.d
 cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
 vm.swappiness = 1
+vm.overcommit_memory = 2
 vm.dirty_writeback_centisecs = 600
 vm.dirty_expire_centisecs = 600
 EOF
