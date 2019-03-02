@@ -44,10 +44,10 @@ echo ""
 
 # vm.swappiness = 1 ---- THRASH LESS at the expense of MORE CPU USAGE (CPU is faster than thrashing)
 # vm.min_free_kbytes = 65536 --- free memory is used for CACHE and BUFFERS at the expense of LESS RAM FOR APPLICATIONS
-# vm.vfs_cache_pressure = 300 --- DELETES FROM RAM more data about file and directory inodes, at the expense of SLOWER STORAGE
+# vm.vfs_cache_pressure = 200 --- DELETES FROM RAM more data about file and directory inodes, at the expense of SLOWER STORAGE
 # vm.dirty_background_ratio = 5 --- if dirty pagecache exceeds this percentage, writeback threads start writing back dirty RAM
 # vm.dirty_ratio = 10 --- applications that want to write to the pagecache are blocked and start performing writeback as well
-# vm.dirty_writeback_centisecs = 600 --- the interval at which the pdflush daemon wakes up to write dirty data to disk
+# vm.dirty_writeback_centisecs = 300 --- the interval at which the pdflush daemon wakes up to write dirty data to disk
 # vm.dirty_expire_centisecs = 600 --- Defines after which timeframe a dirty page should be written out latest
 # ^------------------------------ --- multiple pages dirtied in the same file will all be written when the expiration time occurs
 # vm.min_slab_ratio = 1 --- amount of Slab space that can be recycled in the Slab pool when the percentage of the area is reached
@@ -57,7 +57,7 @@ mkdir -p /etc/sysctl.d
 cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
 vm.swappiness = 1
 vm.min_free_kbytes = 65536
-vm.vfs_cache_pressure = 300
+vm.vfs_cache_pressure = 200
 vm.dirty_background_ratio = 5
 vm.dirty_ratio = 10
 vm.dirty_writeback_centisecs = 300
