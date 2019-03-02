@@ -18,14 +18,15 @@ echo ""
 echo "Working, please wait..."
 echo ""
 
-# --- Swap minimum usage, kill processes requesting too much RAM and save to storage after maximum  6 seconds.
-# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-configuration_tools-configuring_system_memory_capacity
-# At vm.overcommit_ratio = 350 starts killing just about as the swap gets filled at 80%
+# --- Swap minimum usage, keep 64 MB kernel only RAM, buffer less data about files and save to storage after maximum  6 seconds.
+
+# Tested on old Pentium 4 with 768 MB for minimizing storage thrashing and maximizing responsiveness in low memory conditions.
+
 mkdir -p /etc/sysctl.d
 cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
 vm.swappiness = 1
-vm.overcommit_ratio = 350
-vm.overcommit_memory = 2
+vm.min_free_kbytes = 65536
+vm.vfs_cache_pressure = 300
 vm.dirty_writeback_centisecs = 600
 vm.dirty_expire_centisecs = 600
 EOF
