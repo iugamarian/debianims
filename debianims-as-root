@@ -18,17 +18,43 @@ echo ""
 echo "Working, please wait..."
 echo ""
 
-# --- Swap minimum usage, keep 64 MB kernel only RAM, buffer less data about files and save to storage after maximum  6 seconds.
+# --- Swap minimum usage, keep 64 MB kernel only RAM, buffer less data about files and save to storage after maximum 6 seconds.
+
+# https://stackoverflow.com/questions/18353467/implementation-of-dirty-expire-centisecs
+# https://support.hpe.com/hpsc/doc/public/display?docId=c02949914
+# https://support.hpe.com/hpsc/doc/public/display?docId=emr_na-c02807570
+# http://linux.sys-con.com/node/431838?page=0,2
+# https://blog.kamens.us/2016/11/10/linux-what-to-do-when-the-oom-killer-is-being-triggered-when-you-have-plenty-of-memory
+# https://www.ryadel.com/en/linux-memory-management-mechanism-analysis-kernel/
 
 # Tested on old Pentium 4 with 768 MB for minimizing storage thrashing and maximizing responsiveness in low memory conditions.
 
-mkdir -p /etc/sysctl.d
+# Without this configuration: Firefox with many tabs open hangs the computer, CTRL+ALT+F1 not possible, mouse cursor blocked.
+
+# With this configuration: Firefox with many tabs open hangs the computer but CTRL+ALT+F1 is possible, mouse cursor still works.
+
+# After CTRL+ALT+F1 login as root and run "killall firefox-esr" then ALT+F7 to return to the graphical Desktop.
+
+# With "killall firefox" there is error no process found. Required command is "killall firefox-esr".
+
+# If you buy/have more RAM it is still recommended to have this configuration - better kernel memory management so all is faster.
+
+# vm.swappiness = 1 ---- THRASH LESS at the expense of MORE CPU USAGE (CPU is faster than thrashing)
+# vm.min_free_kbytes = 65536 --- free memory is used for CACHE and BUFFERS at the expense of LESS RAM FOR APPLICATIONS
+# vm.vfs_cache_pressure = 300 --- DELETES FROM RAM more data about file and directory inodes, at the expense of SLOWER STORAGE
+# vm.dirty_writeback_centisecs = 600 --- the interval at which the pdflush daemon wakes up to write dirty data to disk
+# vm.dirty_expire_centisecs = 600 --- time for a page to be considered old enough for flushing to disk via the pdflush daemon
+# ^------------------------------ --- multiple pages dirtied in the same file will all be written when the expiration time occurs
+# vm.min_slab_ratio = 1 --- amount of Slab space that can be recycled in the Slab pool when the percentage of the area is reached
+# ^-------------------- --- for small and irregular memory allocation requirements, Linux designed Slab distributor
+# ^-------------------- --- 
 cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
 vm.swappiness = 1
 vm.min_free_kbytes = 65536
 vm.vfs_cache_pressure = 300
 vm.dirty_writeback_centisecs = 600
 vm.dirty_expire_centisecs = 600
+vm.min_slab_ratio = 1
 EOF
 
 # --- Make /tmp reside in tmpfs.
