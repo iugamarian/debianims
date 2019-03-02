@@ -48,6 +48,8 @@ echo ""
 # vm.min_slab_ratio = 1 --- amount of Slab space that can be recycled in the Slab pool when the percentage of the area is reached
 # ^-------------------- --- for small and irregular memory allocation requirements, Linux designed Slab distributor
 # ^-------------------- --- 
+
+mkdir -p /etc/sysctl.d
 cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
 vm.swappiness = 1
 vm.min_free_kbytes = 65536
@@ -73,6 +75,7 @@ echo "tmpfs           /tmp            tmpfs  nodev,nosuid,mode=1777     0 0" >> 
 # Write /usr/bin/zramims and make executable
 # https://github.com/novaspirit/rpi_zram
 # Using cat requires escaping [[ ` ]] and [[ $ ]] with \
+mkdir -p /usr/bin
 cat <<EOF > /usr/bin/zramims
 #!/bin/bash
 cores=\$(nproc --all)
