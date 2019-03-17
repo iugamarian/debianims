@@ -128,6 +128,21 @@ sync
 sleep 1
 systemctl enable rc-local
 
+# --- Disable man-db automatic indexing, because it slows boot time and does many small writes on ssd
+
+# There will be no more sure results on man searches after this
+# Run mandb and wait a few minutes before a man search to get sure results
+# https://askubuntu.com/questions/77156/how-to-get-line-number-from-grep
+# For now not getting line number, just replacing man-db with sleep 1
+# Warning! More results appear after newlines, for example with two results:
+# grep -n "/var/cache" /usr/lib/systemd/system/man-db.service | cut -f1 -d:
+# https://bbs.archlinux.org/viewtopic.php?id=242344
+sed -i 's/\/usr\/bin\/mandb --quiet/sleep 1/g' /usr/lib/systemd/system/man-db.service
+sed -i 's/\/usr\/bin\/mandb --quiet/sleep 1/g' /lib/systemd/system/man-db.service
+sed -i 's/\/usr\/bin\/mandb/sleep 1/g' /usr/lib/systemd/system/man-db.service
+sed -i 's/\/usr\/bin\/mandb/sleep 1/g' /lib/systemd/system/man-db.service
+
+
 # --- Done.
 
 sync
