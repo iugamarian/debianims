@@ -18,7 +18,7 @@ echo ""
 echo "Working, please wait..."
 echo ""
 
-# --- Swap minimum usage, keep 64 MB kernel only RAM, buffer less data about files and save to storage after maximum 6 seconds.
+# --- Swap minimum usage, keep 64 MB kernel only RAM, buffer less data about files and save to storage after maximum 8 seconds.
 
 # https://stackoverflow.com/questions/18353467/implementation-of-dirty-expire-centisecs
 # https://support.hpe.com/hpsc/doc/public/display?docId=c02949914
@@ -44,26 +44,30 @@ echo ""
 
 # vm.swappiness = 1 ---- THRASH LESS at the expense of MORE CPU USAGE (CPU is faster than thrashing)
 # vm.min_free_kbytes = 65536 --- free memory is used for CACHE and BUFFERS at the expense of LESS RAM FOR APPLICATIONS
-# vm.vfs_cache_pressure = 200 --- DELETES FROM RAM more data about file and directory inodes, at the expense of SLOWER STORAGE
+# vm.vfs_cache_pressure = 300 --- DELETES FROM RAM more data about file and directory inodes, at the expense of SLOWER STORAGE
 # vm.dirty_background_ratio = 5 --- if dirty pagecache exceeds this percentage, writeback threads start writing back dirty RAM
 # vm.dirty_ratio = 10 --- applications that want to write to the pagecache are blocked and start performing writeback as well
-# vm.dirty_writeback_centisecs = 300 --- the interval at which the pdflush daemon wakes up to write dirty data to disk
-# vm.dirty_expire_centisecs = 600 --- Defines after which timeframe a dirty page should be written out latest
+# vm.dirty_bytes = 33554432 ---
+# vm.dirty_background_bytes = 33554432 --- 
+# vm.dirty_background_bytes and vm.dirty_bytes are another way to specify these parameters. If you set the _bytes version the _ratio version will become 0, and vice-versa. Experience of ims - it's better with vm.dirty_background_bytes and vm.dirty_bytes at 32 MB
+# vm.dirty_writeback_centisecs = 800 --- the interval at which the pdflush daemon wakes up to write dirty data to disk
+# vm.dirty_expire_centisecs = 800 --- Defines after which timeframe a dirty page should be written out latest
 # ^------------------------------ --- multiple pages dirtied in the same file will all be written when the expiration time occurs
 # vm.min_slab_ratio = 1 --- amount of Slab space that can be recycled in the Slab pool when the percentage of the area is reached
 # ^-------------------- --- for small and irregular memory allocation requirements, Linux designed Slab distributor
 
 mkdir -p /etc/sysctl.d
-cat <<EOF > /etc/sysctl.d/30-save-after-max-6-seconds.conf
+cat <<EOF > /etc/sysctl.d/30-sync-after-max-8-seconds.conf
 vm.swappiness = 1
 vm.min_free_kbytes = 65536
-vm.vfs_cache_pressure = 200
-vm.dirty_background_ratio = 5
-vm.dirty_ratio = 10
-vm.dirty_writeback_centisecs = 300
-vm.dirty_expire_centisecs = 600
-vm.min_slab_ratio = 1
-
+vm.vfs_cache_pressure = 300
+vm.dirty_bytes = 33554432
+vm.dirty_background_bytes = 33554432
+vm.dirty_writeback_centisecs = 800
+vm.dirty_expire_centisecs = 800
+#vm.dirty_background_ratio = 5
+#vm.dirty_ratio = 10
+#vm.min_slab_ratio = 1
 EOF
 
 # --- Make /tmp reside in tmpfs.
