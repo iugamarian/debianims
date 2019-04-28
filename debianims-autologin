@@ -3,9 +3,26 @@ echo ""
 echo "Read the instructions in this script"
 echo ""
 exit 0
+
+--- For all desktops except LXQt and KDE:
+
+https://ubuntu-mate.community/t/auto-login-to-the-desktop/60
+
+su -
+
+nano /usr/share/lightdm/lightdm.conf.d/01_debian.conf
+
+At the end add:
+
+autologin-user=username
+
+--- For LXQt and KDE:
+
 # https://askubuntu.com/questions/912700/how-to-skip-login-screen-on-lubuntu-17-04-lxqt
 
 # Turns out I was having trouble because LXQt is not using lightdm to login, it is using SDDM, so I created a configuration file at /etc/sddm.conf:
+
+su -
 
 nano /etc/sddm.conf
 
