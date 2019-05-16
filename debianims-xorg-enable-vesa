@@ -17,7 +17,22 @@ xorg :1 -configure
 X -config /root/xorg.conf.new
 
 # Replace after Card 0 the driver with "vesa":
+# or/and
+# Force preferred resolutions like full hd supported at 24 Hz and xorg sends at 60 Hz:
+# https://askubuntu.com/questions/74808/how-do-i-force-a-resolution-of-1024x768
+
 nano /root/xorg.conf.new
+
+...
+Section "Screen"
+    ...
+    SubSection "Display"
+        Depth    24
+=================================================
+        Modes     "1280x720" "1024x768" "800x600"
+=================================================
+    EndSubSection
+EndSection 
 
 # Move it to it's default location:
 mv /root/xorg.conf.new /etc/X11/xorg.conf
