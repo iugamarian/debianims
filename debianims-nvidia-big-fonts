@@ -1,0 +1,15 @@
+# http://www.techytalk.info/lubuntu-change-fonts-dpi-when-using-proprietary-nvidia-driver/
+
+su -
+
+apt install -y nvidia-xconfig
+
+nvidia-xconfig --no-use-edid-dpi
+
+This will generate default xorg.conf and disable use of DPI info acquired from your monitor EDID. Now you are free to specify your desired DPI by placing following inside section "Monitor" of your /etc/X11/xorg.conf:
+
+Option "DPI" "96 x 96"
+
+You can change DPI value from 96 to your desired value. Changes should be noticeable after reboot.
+
+! ! ! ! If black screen on boot with pci=nomsi for nvidia-legacy-340xx-driver for GeForce 9 series that doesn't recive this kind of fixes to the kernel any more fix by moving mouse or pressing CTRL on keyboard for 3 seconds.
