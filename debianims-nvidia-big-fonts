@@ -12,4 +12,4 @@ Option "DPI" "96 x 96"
 
 You can change DPI value from 96 to your desired value. Changes should be noticeable after reboot.
 
-! ! ! ! If black screen on boot with pci=nomsi for nvidia-legacy-340xx-driver for GeForce 9 series that doesn't recive this kind of fixes to the kernel any more fix by moving mouse or pressing CTRL on keyboard for 3 seconds.
+! ! ! ! If black screen on boot with pci=nomsi for nvidia-legacy-340xx-driver for GeForce 9 series that doesn't recive this kind of fixes to the kernel any more fix by moving mouse or pressing CTRL on keyboard for 3 seconds at every boot after black screen.
