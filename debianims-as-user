@@ -43,6 +43,7 @@ fi
 
 # --- Mozilla Firefox cache in /tmp
 
+mkdir -p /home/$USER/.cache/mozilla
 rm -rf /home/$USER/.cache/mozilla
 ln -s /tmp /home/$USER/.cache/mozilla
 
@@ -55,6 +56,7 @@ vo=vaapi
 save-position-on-quit
 audio-normalize-downmix=yes
 volume=100
+fullscreen
 EOF
 
 # --- Done.
