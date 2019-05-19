@@ -51,8 +51,13 @@ ln -s /tmp /home/$USER/.cache/mozilla
 # Put vdpau instead of vaapi if you have proprietary nvidia drivers
 mkdir -p /home/$USER/.config/mpv
 cat <<EOF > /home/$USER/.config/mpv/mpv.conf
+#https://github.com/mpv-player/mpv/issues/5711
+# only with vo=vaapi you can't acces ui movie scroll bar
 hwdec=vaapi
-vo=vaapi
+vo=gpu
+gpu-context=x11egl
+#hwdec=vaapi
+#vo=vaapi
 save-position-on-quit
 audio-normalize-downmix=yes
 volume=100
