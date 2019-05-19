@@ -8,10 +8,20 @@ On Debian Buster 10 Chromium by default uses accelerated video decoding for h264
 -if colors are very wrong, as per https://github.com/chjj/compton/issues/477
 and https://bbs.archlinux.org/viewtopic.php?id=236058
 and https://github.com/chjj/compton/issues/477
+and https://www.phoronix.com/forums/forum/software/desktop-linux/1074851-ubuntu-gets-snappier-video-playback-with-chromium-snap-for-va-api-acceleration/page2
 -open a terminal and start chromium with:
 allow_rgb10_configs=false chromium
 -go to youtube test a video
 -make it permanent if it works
+
+Working:
+
+nano ~/.xsessionrc
+
+export allow_rgb10_configs=false
+
+Not working:
+
 su -
 nano /etc/drirc
 
