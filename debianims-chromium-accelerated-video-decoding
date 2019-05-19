@@ -7,6 +7,7 @@ On Debian Buster 10 Chromium by default uses accelerated video decoding for h264
 -go to youtube, test a video
 -if colors are very wrong, as per https://github.com/chjj/compton/issues/477
 and https://bbs.archlinux.org/viewtopic.php?id=236058
+and https://github.com/chjj/compton/issues/477
 -open a terminal and start chromium with:
 allow_rgb10_configs=false chromium
 -go to youtube test a video
@@ -17,3 +18,7 @@ nano /etc/drirc
 <application name="chromium" executable="chromium">
     <option name="allow_rgb10_configs" value="false"/>
 </application>
+
+or
+
+Add <option name="allow_rgb10_configs" value="false" /> to the device section in /etc/drirc and restart
