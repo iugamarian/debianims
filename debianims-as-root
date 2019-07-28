@@ -146,6 +146,24 @@ sed -i 's/\/usr\/bin\/mandb --quiet/sleep 1/g' /lib/systemd/system/man-db.servic
 sed -i 's/\/usr\/bin\/mandb/sleep 1/g' /usr/lib/systemd/system/man-db.service
 sed -i 's/\/usr\/bin\/mandb/sleep 1/g' /lib/systemd/system/man-db.service
 
+# --- Fix graphical login on older AMD GPU's - need internet
+
+# https://askubuntu.com/questions/1056133/lightdm-or-x-server-start-very-slow-takes-a-couple-of-minutes/1064549
+# https://forum.manjaro.org/t/login-screen-not-showing-till-you-hold-any-key/45966/28
+
+# rng-tools does not work
+
+# haveged works, just needs to be installed
+
+apt update
+apt install -y haveged
+
+# also need to install firmware-misc-nonfree before installing Xorg and desktop
+# firmware-linux-nobfree includes firmware-misc-non-free and firmware-amd-graphics
+
+# as apt is being used, installing some good console oriented programs that are in the "main" repository
+
+apt install -y git iotop mc mpv ncdu parted
 
 # --- Done.
 
