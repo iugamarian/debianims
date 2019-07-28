@@ -163,7 +163,7 @@ apt install -y haveged
 
 # as apt is being used, installing some good console oriented programs that are in the "main" repository
 
-apt install -y git iotop mc mpv ncdu parted
+apt install -y git iotop mc ncdu
 
 # --- Done.
 
