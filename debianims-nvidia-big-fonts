@@ -12,13 +12,13 @@ Option "DPI" "96 x 96"
 
 /etc/X11/xorg.conf
 
-Section “Monitor”
-Identifier “Monitor0”
-VendorName “Unknown”
-ModelName “Unknown”
+Section "Monitor"
+Identifier "Monitor0"
+VendorName "Unknown"
+ModelName "Unknown"
 HorizSync 28.0 – 33.0
 VertRefresh 43.0 – 72.0
-Option “DPI” “96 x 96”
+Option "DPI" "96 x 96"
 
 You can change DPI value from 96 to your desired value. Changes should be noticeable after reboot.
 
