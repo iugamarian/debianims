@@ -1,0 +1,8 @@
+# Write /etc/rc.local and make executable
+cat <<EOF > /etc/rc.local
+#!/bin/sh -e
+/usr/bin/zramims &
+echo 50000000 > /sys/class/drm/card0/device/hwmon/hwmon1/power1_cap
+exit 0
+EOF
+chmod +x /etc/rc.local
