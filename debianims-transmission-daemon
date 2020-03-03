@@ -1,10 +1,19 @@
 # https://linuxconfig.org/how-to-set-up-transmission-daemon-on-a-raspberry-pi-and-control-it-via-web-interface
 # https://openwrt.org/docs/guide-user/services/downloading_and_filesharing/transmission
 # https://github.com/transmission/transmission/wiki/Editing-Configuration-Files
+# https://unix.stackexchange.com/questions/334905/how-do-i-fix-wget-on-an-http-url-not-trusted-errors-in-kali
+# https://forum.transmissionbt.com/viewtopic.php?t=10456
 
 su -
+apt-get install -y transmission-daemon
+/etc/init.d/transmission-daemon stop
+systemctl stop transmission-daemon
 ps -ef |grep transmission
 kill -9 number
+mkdir -p /mnt/datafs/incomplete
+mkdir -p /mnt/datafs/torrents
+chown debian-transmission /mnt/datafs/incomplete
+chown debian-transmission /mnt/datafs/torrents
 nano /etc/transmission-daemon/settings.json
 
 {
