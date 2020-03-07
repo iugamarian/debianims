@@ -15,7 +15,7 @@ mkdir -p /mnt/datafs/torrents
 chown debian-transmission /mnt/datafs/incomplete
 chown debian-transmission /mnt/datafs/torrents
 
-Add 60 seconds delay before starting transmission-daemon, time for clock to sync from time server:
+Add 60 seconds delay for clock to finish sync from time server, avoid issues with files seen in the future:
 
 nano /etc/init.d/transmission-daemon
 
@@ -24,7 +24,7 @@ start_daemon () {
         log_progress_msg "(disabled)"
 		log_end_msg 255 || true
     else
-    ##################### for clock to sync from time server add 30 seconds delay
+    ##################### Add 60 seconds delay for clock to finish sync from time server
 	/bin/sleep 60
     #####################
         start-stop-daemon --start \
