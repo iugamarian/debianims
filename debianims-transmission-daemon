@@ -14,6 +14,32 @@ mkdir -p /mnt/datafs/incomplete
 mkdir -p /mnt/datafs/torrents
 chown debian-transmission /mnt/datafs/incomplete
 chown debian-transmission /mnt/datafs/torrents
+
+Add 60 seconds delay before starting transmission-daemon, time for clock to sync from time server:
+
+nano /etc/init.d/transmission-daemon
+
+start_daemon () {
+    if [ $ENABLE_DAEMON != 1 ]; then
+        log_progress_msg "(disabled)"
+		log_end_msg 255 || true
+    else
+    ##################### for clock to sync from time server add 30 seconds delay
+	/bin/sleep 60
+    #####################
+        start-stop-daemon --start \
+        --chuid $USER \
+		$START_STOP_OPTIONS \
+        --exec $DAEMON -- $OPTIONS || log_end_msg $?
+		log_end_msg 0
+    fi
+}
+
+
+When using a normal PC leave most of the settings at the default values:
+
+https://github.com/transmission/transmission/wiki/Editing-Configuration-Files
+
 nano /etc/transmission-daemon/settings.json
 
 {
@@ -81,6 +107,86 @@ nano /etc/transmission-daemon/settings.json
     "speed-limit-down-enabled": false,
     "speed-limit-up": 100,
     "speed-limit-up-enabled": false,
+    "start-added-torrents": true,
+    "trash-original-torrent-files": false,
+    "umask": 18,
+    "upload-limit": 100,
+    "upload-limit-enabled": 0,
+    "upload-slots-per-torrent": 14,
+    "utp-enabled": true
+}
+
+When using a very old PC, ARM platform, Raspberry PI put limits in the settings to lower CPU and RAM usage:
+
+https://github.com/transmission/transmission/wiki/Editing-Configuration-Files
+
+nano /etc/transmission-daemon/settings.json
+
+{
+    "alt-speed-down": 50,
+    "alt-speed-enabled": false,
+    "alt-speed-time-begin": 540,
+    "alt-speed-time-day": 127,
+    "alt-speed-time-enabled": false,
+    "alt-speed-time-end": 1020,
+    "alt-speed-up": 50,
+    "bind-address-ipv4": "0.0.0.0",
+    "bind-address-ipv6": "::",
+    "blocklist-enabled": false,
+    "blocklist-url": "http://www.example.com/blocklist",
+    "cache-size-mb": 4,
+    "dht-enabled": true,
+    "download-dir": "/mnt/datafs/torrents",
+    "download-limit": 100,
+    "download-limit-enabled": 0,
+    "download-queue-enabled": true,
+    "download-queue-size": 1,
+    "encryption": 1,
+    "idle-seeding-limit": 30,
+    "idle-seeding-limit-enabled": false,
+    "incomplete-dir": "/mnt/datafs/incomplete",
+    "incomplete-dir-enabled": false,
+    "lpd-enabled": false,
+    "max-peers-global": 50,
+    "message-level": 2,
+    "peer-congestion-algorithm": "",
+    "peer-id-ttl-hours": 6,
+    "peer-limit-global": 50,
+    "peer-limit-per-torrent": 5,
+    "peer-port": 51413,
+    "peer-port-random-high": 65535,
+    "peer-port-random-low": 49152,
+    "peer-port-random-on-start": false,
+    "peer-socket-tos": "default",
+    "pex-enabled": true,
+    "port-forwarding-enabled": true,
+    "preallocation": 1,
+    "prefetch-enabled": true,
+    "queue-stalled-enabled": true,
+    "queue-stalled-minutes": 30,
+    "ratio-limit": 2,
+    "ratio-limit-enabled": false,
+    "rename-partial-files": false,
+    "rpc-authentication-required": true,
+    "rpc-bind-address": "0.0.0.0",
+    "rpc-enabled": true,
+    "rpc-host-whitelist": "",
+    "rpc-host-whitelist-enabled": true,
+    "rpc-password": "password",
+    "rpc-port": 9091,
+    "rpc-url": "/transmission/",
+    "rpc-username": "pi",
+    "rpc-whitelist": "127.0.0.1,192.168.1.*",
+    "rpc-whitelist-enabled": true,
+    "scrape-paused-torrents-enabled": true,
+    "script-torrent-done-enabled": false,
+    "script-torrent-done-filename": "",
+    "seed-queue-enabled": false,
+    "seed-queue-size": 10,
+    "speed-limit-down": 6000,
+    "speed-limit-down-enabled": true,
+    "speed-limit-up": 6000,
+    "speed-limit-up-enabled": true,
     "start-added-torrents": true,
     "trash-original-torrent-files": false,
     "umask": 18,
