@@ -38,14 +38,55 @@ then
   sleep 1
   killall -e /usr/lib/firefox-esr/firefox-esr
   sync
-  sleep 1
+  sleep 5
+  sync
 fi
+
+# --- Chromium needs to be closed
+
+ps -ef | grep -v grep | grep -q chromium
+if [ $? -eq 0 ]
+then
+  echo ""
+  echo "Chromium is open. Closing it in:"
+  echo ""
+  sleep 1
+  echo "3"
+  echo ""
+  sleep 1
+  echo "2"
+  echo ""
+  sleep 1
+  echo "1"
+  echo ""
+  sleep 1
+  killall -e /usr/lib/chromium/chromium
+  sync
+  sleep 5
+  sync
+fi
+
 
 # --- Mozilla Firefox cache in /tmp
 
 mkdir -p /home/$USER/.cache/mozilla
 rm -rf /home/$USER/.cache/mozilla
 ln -s /tmp /home/$USER/.cache/mozilla
+
+# --- Chromium cache in /tmp
+
+mkdir -p /home/$USER/.cache/chromium
+rm -rf /home/$USER/.cache/chromium
+ln -s /tmp /home/$USER/.cache/chromium
+
+# Firefox, Chromium will create and use this busy folders inside /tmp:
+
+# /tmp/firefox
+# /tmp/Default
+
+# You can check /tmp is the most used for internet browsing:
+
+# find / -xdev -printf '%T+ %P\n' | sort -n | tail -99
 
 # Configure mpv for hardware decoding on Intel and Amd and Ati graphic cards
 # Put vdpau instead of vaapi if you have proprietary nvidia drivers
@@ -60,6 +101,7 @@ gpu-context=x11egl
 #vo=vaapi
 save-position-on-quit
 audio-normalize-downmix=yes
+audio-channels=stereo
 volume=100
 fullscreen
 EOF
