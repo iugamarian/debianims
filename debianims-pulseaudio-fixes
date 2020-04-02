@@ -1,0 +1,15 @@
+https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting#Some_profiles_like_SPDIF_are_not_enabled_by_default_on_the_card
+
+Find what profile works as intended in configuration tab:
+
+pavucontrol
+
+Set the profile:
+
+pacmd list-cards
+
+Some profiles like SPDIF are not enabled by default on the card
+
+nano ~/.config/pulse/default.pa
+
+set-card-profile alsa_card.pci-0000_00_05.0 output:analog-stereo+input:analog-stereo
