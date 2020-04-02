@@ -32,3 +32,13 @@ nano /etc/drirc
 or
 
 Add <option name="allow_rgb10_configs" value="false" /> to the device section in /etc/drirc and restart
+
+https://www.linuxuprising.com/2018/08/how-to-enable-hardware-accelerated.html
+
+chrome://flags
+
+search for the Hardware-accelerated video decode option in chrome://flags) and enable it
+
+chrome://gpu/
+
+chrome://media-internals
