@@ -1,0 +1,16 @@
+/home/pi/.config/autostart/lxrandr-autostart.desktop
+
+[Desktop Entry]
+
+Type=Application
+
+Name=LXRandR autostart
+
+Comment=Start xrandr with settings done in LXRandR
+
+Exec=sh -c 'xrandr --output eDP --off --output HDMI-A-0 --mode 1920x1080 --rate 60.00 --same-as eDP'
+
+OnlyShowIn=LXDE
+
+
+# Or delete OnlyShowIn=LXDE for other Desktop
