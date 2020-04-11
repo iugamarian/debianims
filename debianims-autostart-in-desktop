@@ -1,0 +1,36 @@
+https://www.addictivetips.com/ubuntu-linux-tips/automatically-start-programs-on-mate/
+
+Autostart programs via terminal
+The Mate autostart GUI tool is a great way to manage automatic startup programs quickly. However, it’s not the only way. If you’re a terminal fan, you can also create automatic startup entries in the command-line.
+
+To make a new startup entry, launch a terminal window with Ctrl + Alt + T or Ctrl + Shift + T. Then, move the terminal session into the /usr/share/applications/ directory.
+
+cd /usr/share/applications/
+Run the ls command and view the program shortcuts in the folder, so that you may locate the name of the program you want to auto-start.
+
+ls
+Can’t find the app you need? Combine ls with the grep tool to more easily filter out a keyword.
+
+ls | grep programname
+Take the name of the program and plug it into the following cp command to create a new autostart entry. For example, to autostart Firefox on Mate through the terminal, you’d do:
+
+cp firefox.desktop ~/.config/autostart/
+Removing automatic program start in the terminal
+To get rid of an automatic startup entry for the Mate desktop environment from the command-line, you’ll need CD into the ~/.config/autostart directory.
+
+cd ~/.config/autostart
+Can’t access the ~/.config/autostart directory on your Mate desktop? If so, you may not have an autostart folder. To create one, use the mkdir command.
+
+mkdir -p ~/.config/autostart
+Inside of the autostart folder, run the ls command. Running this command will allow you to take a look inside the folder.
+
+ls
+
+Take note of the files revealed by the ls tool. Then, plug them into the following rm command to delete and disable the startup entries.
+
+rm programname.desktop
+Want to delete more than one startup entry at a time? Use the rm command, but instead of specifying the exact name of the startup entry file (such as firefox.desktop,) you can make use of the wildcard (*) function in Bash on Linux.
+
+Using the wildcard (*) will allow you to automatically remove and delete all desktop shortcut files from the ~/.config/autostart directory.
+
+rm *.desktop
