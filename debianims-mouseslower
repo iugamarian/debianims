@@ -25,9 +25,12 @@ xinput list --id-only 'Telink Wireless Receiver' | awk 'NR%2==1 {print "xinput -
 #xinput --list | grep 'Telink Wireless Receiver.*slave[[:space:]]\{1,2\}pointer' | grep -Po '\d+' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 echo ""
 exit 0
+
 ========================
+
 chmod +x /usr/bin/mouseslower
 exit
+mkdir -p /home/pi/.config/autostart/
 nano /home/pi/.config/autostart/mouseslower-autostart.desktop
 
 ========================
@@ -42,10 +45,9 @@ Comment=Start Mouseslower
 
 Exec=sh -c '/usr/bin/mouseslower'
 
-OnlyShowIn=LXDE
+========================
 
-
-# Or you can delete OnlyShowIn=LXDE for other Desktop
+# You can choose to add OnlyShowIn=LXDE for LXDE Desktop
 
 
 # https://stackoverflow.com/questions/18755967/how-to-make-a-program-that-finds-ids-of-xinput-devices-and-sets-xinput-some-set
