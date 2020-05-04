@@ -14,3 +14,11 @@ OnlyShowIn=LXDE
 
 
 # Or delete OnlyShowIn=LXDE for other Desktop
+
+Radeon laptop:
+
+xrandr --output eDP --off --output HDMI-A-0 --mode 1920x1080 --rate 60.00 --same-as eDP
+
+Intel laptop:
+
+xrandr --output LVDS-1 --off --output VGA-1 --mode 1920x1080 --rate 60.00 --same-as LVDS-1
