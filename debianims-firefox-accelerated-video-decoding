@@ -1,11 +1,20 @@
 For Ubuntu for now:
 
+First check that vaapi has hardware video decoding support:
+
+sudo -s
+apt install -y mesa-va-drivers vainfo
+exit
+vainfo
+
+If yes continue down here:
+
 1) Need to use Gnome in Wayland
 
 https://linuxconfig.org/how-to-enable-disable-wayland-on-ubuntu-20-04-desktop
 
 sudo -s
-apt install -y gnome-session-wayland gdm3 gnome-core wayland-protocols htop synaptic
+apt install -y gnome-session-wayland gdm3 gnome-core wayland-protocols htop synaptic mesa-va-drivers vainfo
 
 =====================
 Select GDM3 when asked during install.
