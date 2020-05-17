@@ -6,12 +6,18 @@ https://linuxconfig.org/how-to-enable-disable-wayland-on-ubuntu-20-04-desktop
 
 sudo -s
 apt install -y gnome-session-wayland gdm3 gnome-core wayland-protocols htop synaptic
-Select GDM3 when asked.
+
+=====================
+Select GDM3 when asked during install.
+=====================
+
 WaylandEnable is set false by Ubuntu at compile time so need
 nano /etc/gdm3/custom.conf
+
 =====================
 WaylandEnable=true
 =====================
+
 sync
 poweroff
 Power on the PC
@@ -23,7 +29,7 @@ As user:
 echo $XDG_SESSION_TYPE
 htop
 
-2) If missing VP9 hardware deconding on the GPU need:
+2) If missing VP9 hardware deconding on the GPU need to install h264ify in Firefox:
 
 https://addons.mozilla.org/ro/firefox/addon/h264ify/
 
@@ -38,28 +44,44 @@ Hardware acceleration only works when using Wayland; Xorg support is not impleme
 
 Before trying VA-API support in Firefox be sure to:
 
-    Install correct VA-API driver for your video card and verify VA-API has been enabled and working correctly, see Hardware video acceleration;
-    Set widget.wayland-dmabuf-vaapi.enabled to true in about:config;
-    Enable appropriate hardware accelerated compositing for Firefox (GL compositor or WebRender): 
-    OpenGL works ok:
-    
-    Basic software OMTC is enabled by default.
+Install correct VA-API driver for your video card and verify VA-API has been enabled and working correctly, see Hardware video acceleration;
+Set widget.wayland-dmabuf-vaapi.enabled to true in about:config;
+Enable appropriate hardware accelerated compositing for Firefox (GL compositor or WebRender): 
+
+=====================
+OpenGL works ok:
+=====================
+
+Basic software OMTC is enabled by default.
 
 To check if OpenGL OMTC is enabled, go to about:support and under the "Graphics" section look for "Compositing". If it reports "Basic", OpenGL OMTC is disabled; if it reports "OpenGL" it is enabled.
 
 If OpenGL OMTC is disabled, you can force-enable it by going to about:config and enabling layers.acceleration.force-enabled. Restart Firefox for changes to take effect. 
     
-    Set media.ffvpx.enabled to false in about:config to disable the bundled FFmpeg;
+Set media.ffvpx.enabled to false in about:config to disable the bundled FFmpeg;
     
-    Test:
+Test:
     
-    Open htop in Terminal
+Open htop in Terminal
     
-    Open Firefox
+Open Firefox
     
-    Go to Youtube, play some videos, select 1080p HD quality
+Go to Youtube, play some videos, select 1080p HD quality
     
-    If after 1 minute playback of each video CPU usage is below 70% for a dual core CPU
+If after 1 minute playback of each video CPU usage is below 70% for a dual core CPU
     
-    Pentium D or AMD Athlon X2 then video accelerated ecoding works.
-    
+like a Pentium D or AMD Athlon X2 then video accelerated decoding works ok.
+
+4) If default Desktop environment is not Gnome on Wayland at startup use:
+
+https://unix.stackexchange.com/questions/367294/how-do-i-change-my-default-session
+
+sudo -s
+update-alternatives --config x-session-manager
+
+=====================
+Number for Gnome on Wayland then Enter
+=====================
+
+poweroff
+Power on the PC.
