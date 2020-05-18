@@ -112,3 +112,7 @@ If you want to disable the Wayland mode again, you have to delete the 60_firefox
     rm ~/.config/environment.d/60_firefox.conf
 
 The adventurous can opt-in to using the GPU driven Webrender engine in addition to the Wayland support which has to be done from within Firefox itself --> in about:config set gfx. webrender. all to True to enable it or to False to disable it.
+
+https://wiki.archlinux.org/index.php/Firefox#Wayland
+
+You may enter about:support in the URL bar to check the Window Protocol. It should say wayland instead of x11.
