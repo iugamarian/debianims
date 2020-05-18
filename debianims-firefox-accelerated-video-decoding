@@ -77,9 +77,15 @@ Open Firefox
     
 Go to Youtube, play some videos, select 1080p HD quality
     
-If after 1 minute playback of each video CPU usage is below 70% for a dual core CPU
+If after 20 seconds minute playback of each video CPU usage is below 40% for a dual core CPU
     
 like a Pentium D or AMD Athlon X2 then video accelerated decoding works ok.
+
+X11 having ffmpeg disabled in Firefox is under 70%
+
+X11 having ffmpeg enabled in Firefox is under 90%
+
+Step 5 will make Firefox avoid X11 in Ubuntu
 
 4) If default Desktop environment is not Gnome on Wayland at startup use:
 
@@ -94,6 +100,8 @@ Number for Gnome on Wayland then Enter
 
 poweroff
 Power on the PC.
+
+5) Make Firefox avoid X11 in Ubuntu
 
 https://discourse.ubuntu.com/t/the-state-of-wayland-vs-x-esp-in-regard-to-to-the-next-lts/12576/10
 
