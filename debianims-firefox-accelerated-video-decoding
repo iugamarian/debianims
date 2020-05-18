@@ -94,3 +94,21 @@ Number for Gnome on Wayland then Enter
 
 poweroff
 Power on the PC.
+
+https://discourse.ubuntu.com/t/the-state-of-wayland-vs-x-esp-in-regard-to-to-the-next-lts/12576/10
+
+The Firefox Wayland support feels super snappy now. If you want to try that out, I recommend the following commands to set the Wayland env variable globally for your user (only recommended for GNOME- and Ubuntu-session users):
+
+mkdir -p ~/.config/environment.d
+touch ~/.config/environment.d/60_firefox.conf
+echo MOZ_ENABLE_WAYLAND=1 >>~/.config/environment.d/60_firefox.conf
+
+LOG out and back in again to have an effect!!!
+
+If you don’t set the the variable globally and just create a local .desktop file then links from e.g. Thunderbird or Polari won’t open because it tries to open an XWayland-Firefox instance in addtion to the Wayland one, which results in an error message.
+
+If you want to disable the Wayland mode again, you have to delete the 60_firefox.conf file:
+
+    rm ~/.config/environment.d/60_firefox.conf
+
+The adventurous can opt-in to using the GPU driven Webrender engine in addition to the Wayland support which has to be done from within Firefox itself --> in about:config set gfx. webrender. all to True to enable it or to False to disable it.
