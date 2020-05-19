@@ -1,19 +1,28 @@
-/home/pi/.config/autostart/lxrandr-autostart.desktop
+As user:
+
+mkdir -p /home/pi/.config/autostart/
+nano /home/pi/.config/autostart/lxrandr-autostart.desktop
+
+
+Radeon laptop:
 
 [Desktop Entry]
-
 Type=Application
-
 Name=LXRandR autostart
-
 Comment=Start xrandr with settings done in LXRandR
-
 Exec=sh -c 'xrandr --output eDP --off --output HDMI-A-0 --mode 1920x1080 --rate 60.00 --same-as eDP'
 
-OnlyShowIn=LXDE
+
+Intel laptop:
+
+[Desktop Entry]
+Type=Application
+Name=LXRandR autostart
+Comment=Start xrandr with settings done in LXRandR
+Exec=sh -c 'xrandr --output LVDS-1 --off --output VGA-1 --mode 1920x1080 --rate 60.00 --same-as LVDS-1'
 
 
-# Or delete OnlyShowIn=LXDE for other Desktop
+# You can add OnlyShowIn=LXDE for only showing in LXDE Desktop
 
 Radeon laptop:
 
