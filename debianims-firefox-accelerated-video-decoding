@@ -3,7 +3,7 @@ For Ubuntu for now:
 First check that vaapi has hardware video decoding support:
 
 sudo -s
-apt install -y mesa-va-drivers vainfo
+apt install -y ffmpeg mesa-va-drivers vainfo
 exit
 vainfo
 
