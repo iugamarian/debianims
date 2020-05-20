@@ -31,3 +31,19 @@ xrandr --output eDP --off --output HDMI-A-0 --mode 1920x1080 --rate 60.00 --same
 Intel laptop:
 
 xrandr --output LVDS-1 --off --output VGA-1 --mode 1920x1080 --rate 60.00 --same-as LVDS-1
+
+And /etc/default/grub solution (cmdline):
+
+https://superuser.com/questions/626482/permanently-disable-second-screen
+
+Radeon laptop:
+
+video=eDP:d video=HDMI-A-0:e
+
+Intel laptop:
+
+video=LVDS-1:d video=VGA-1:e
+
+Where :d disable :e enable
+
+Then run update-grub
