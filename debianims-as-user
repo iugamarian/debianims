@@ -94,6 +94,7 @@ mkdir -p /home/$USER/.config/mpv
 cat <<EOF > /home/$USER/.config/mpv/mpv.conf
 # https://github.com/mpv-player/mpv/issues/5711
 # https://www.reddit.com/r/nhl_games/comments/5ea3an/increasing_cachereadahead_in_mpv/
+# https://mpv.io/manual/master/
 # only with vo=vaapi you can't acces ui movie scroll bar
 hwdec=vaapi
 vo=gpu
@@ -104,6 +105,7 @@ save-position-on-quit
 audio-normalize-downmix=yes
 audio-channels=stereo
 volume=100
+cache=yes
 demuxer-thread=yes
 demuxer-readahead-secs=200
 fullscreen
