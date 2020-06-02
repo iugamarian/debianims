@@ -124,3 +124,25 @@ The adventurous can opt-in to using the GPU driven Webrender engine in addition 
 https://wiki.archlinux.org/index.php/Firefox#Wayland
 
 You may enter about:support in the URL bar to check the Window Protocol. It should say wayland instead of x11.
+
+===================================================================================
+
+https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/wayland-display-server/1154976-firefox-is-seeing-work-on-wayland-va-api-video-acceleration
+
+To test Firefox vaapi acceleration in Ubuntu 20.04:
+1) sudo apt install -y ffmpeg mesa-va-drivers vainfo
+2) For GPU without support for VP9 install in Firefox:
+https://addons.mozilla.org/ro/firefox/addon/h264ify/
+3) Make Firefox try to start in wayland instead of X11 as user:
+mkdir -p ~/.config/environment.d
+touch ~/.config/environment.d/60_firefox.conf
+echo MOZ_ENABLE_WAYLAND=1 >>~/.config/environment.d/60_firefox.conf
+4) Configure in Firefox about:config :
+widget.wayland-dmabuf-vaapi.enabled = true
+layers.acceleration.force-enabled = true
+media.ffvpx.enabled = false
+5) Power off the PC.
+6) At Ubuntu login screen choose down right Ubuntu on Wayland before entering the user password.
+7) Verify Ubuntu is on Wayland: echo $XDG_SESSION_TYPE = wayland not x11
+8) Verify Firefox is on Wayland: about:support CTRL+F Window Protocol = wayland not x11
+9) Playing youtube video in 1080p HD the CPU usage for an AMD Athlon X2 = 20% on wayland, 90% on x11
