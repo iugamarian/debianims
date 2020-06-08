@@ -130,7 +130,7 @@ You may enter about:support in the URL bar to check the Window Protocol. It shou
 https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/wayland-display-server/1154976-firefox-is-seeing-work-on-wayland-va-api-video-acceleration
 
 To test Firefox vaapi acceleration in Ubuntu 20.04:
-1) sudo apt install -y ffmpeg mesa-va-drivers vainfo
+1) sudo apt install -y ffmpeg mesa-va-drivers vainfo wayland-protocols
 2) For GPU without support for VP9 install in Firefox:
 https://addons.mozilla.org/ro/firefox/addon/h264ify/
 3) Make Firefox try to start in wayland instead of X11 as user:
