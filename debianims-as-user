@@ -98,7 +98,8 @@ cat <<EOF > /home/$USER/.config/mpv/mpv.conf
 # only with vo=vaapi you can't acces ui movie scroll bar
 hwdec=vaapi
 vo=gpu
-gpu-context=x11egl
+gpu-context=wayland
+#gpu-context=x11egl
 #hwdec=vaapi
 #vo=vaapi
 save-position-on-quit
