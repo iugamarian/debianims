@@ -6,3 +6,6 @@ echo 50000000 > /sys/class/drm/card0/device/hwmon/hwmon1/power1_cap
 exit 0
 EOF
 chmod +x /etc/rc.local
+# For RX470 and RX550 about 50W limit is the sweet spot for best efficiency
+# For RX480 and RX580 about 75W limit is the sweet spot for best efficiency
+# echo 75000000 > /sys/class/drm/card0/device/hwmon/hwmon1/power1_cap
