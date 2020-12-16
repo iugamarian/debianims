@@ -8,6 +8,7 @@ sleep 1
 echo ""
 echo "   T U R N    W I R E L E S S    M O U S E    O N"
 sleep 1
+echo ""
 echo "      2"
 echo ""
 sleep 1
@@ -17,9 +18,13 @@ sleep 1
 echo "   S L O W I N G    M O U S E   S P E E D"
 echo ""
 sleep 1
-xinput list --id-only 'Logitech USB-PS/2 Optical Mouse' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
-xinput list --id-only 'Barcode Reader  Mouse' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
-xinput list --id-only 'Telink Wireless Receiver' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+# Use xinput --list and connect to different USB ports and see what ID's are used, for example 14, 15
+# You can put wrong ID's because if it is not the correct one, "libinput Accel Speed" is not found and set
+echo 14 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+echo 15 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+#xinput list --id-only 'Logitech USB-PS/2 Optical Mouse' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+#xinput list --id-only 'Barcode Reader  Mouse' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+#xinput list --id-only 'Telink Wireless Receiver' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 #xinput --list | grep 'Logitech USB-PS/2 Optical Mouse.*slave[[:space:]]\{1,2\}pointer' | grep -Po '\d+' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 #xinput --list | grep 'Barcode Reader.*slave[[:space:]]\{1,2\}pointer' | grep -Po '\d+' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 #xinput --list | grep 'Telink Wireless Receiver.*slave[[:space:]]\{1,2\}pointer' | grep -Po '\d+' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
