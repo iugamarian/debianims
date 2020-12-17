@@ -20,8 +20,13 @@ echo ""
 sleep 1
 # Use xinput --list and connect to different USB ports and see what ID's are used, for example 14, 15
 # You can put wrong ID's because if it is not the correct one, "libinput Accel Speed" is not found and set
+echo 10 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+echo 11 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+echo 12 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+echo 13 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 echo 14 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 echo 15 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
+echo 16 | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 #xinput list --id-only 'Logitech USB-PS/2 Optical Mouse' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 #xinput list --id-only 'Barcode Reader  Mouse' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
 #xinput list --id-only 'Telink Wireless Receiver' | awk 'NR%2==1 {print "xinput --set-prop "$1" \"libinput Accel Speed\" -1"}' | while read line ; do eval $line ; done
@@ -53,6 +58,46 @@ Exec=sh -c '/usr/bin/mouseslower'
 ========================
 
 # You can choose to add OnlyShowIn=LXDE for LXDE Desktop
+
+https://wayland.freedesktop.org/libinput/doc/latest/pointer-acceleration.html#ptraccel-linear
+
+Speed settings below 0 delay when acceleration kicks in, how soon the maximum acceleration is
+
+reached and the maximum acceleration factor.
+
+Extremely low speed settings provide no acceleration and additionally decelerate all movement
+
+by a constant factor.
+
+https://wiki.archlinux.org/index.php/Mouse_acceleration#Setting_mouse_acceleration
+
+Changing the acceleration
+
+Find the id of your device with xinput list and set the acceleration speed with the
+
+following command. Note that the acceleration speed has to be in the range of [-1,1].
+
+Check this plot to see the impact of different acceleration speed values. 
+
+To completely disable any sort of acceleration/deceleration, create the following file:
+
+/etc/X11/xorg.conf.d/50-mouse-acceleration.conf
+
+Section "InputClass"
+
+	Identifier "My Mouse"
+    
+	MatchIsPointer "yes"
+    
+	Option "AccelerationProfile" "-1"
+    
+	Option "AccelerationScheme" "none"
+    
+	Option "AccelSpeed" "-1"
+    
+EndSection
+
+and restart X. 
 
 
 # https://stackoverflow.com/questions/18755967/how-to-make-a-program-that-finds-ids-of-xinput-devices-and-sets-xinput-some-set
