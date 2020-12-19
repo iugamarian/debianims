@@ -1,3 +1,16 @@
+On Wayland with Gnome (or Mate maybe):
+
+https://unix.stackexchange.com/questions/459792/how-to-disable-mouse-acceleration-on-wayland-fedora-28
+
+gsettings   get   org.gnome.desktop.peripherals.mouse   accel-profile
+
+default
+
+gsettings  set  org.gnome.desktop.peripherals.mouse  accel-profile  flat
+
+
+On Xorg:
+
 su -
 apt update
 apt install -y xinput
