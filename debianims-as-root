@@ -103,6 +103,12 @@ while [ \$core -lt \$cores ]; do
   swapon -p 5 /dev/zram\$core
   let core=core+1
 done
+while true
+do
+  /bin/sleep 8
+  sync
+  echo 3 > /proc/sys/vm/drop_caches
+done
 EOF
 chmod +x /usr/bin/zramims
 # Write /etc/rc.local and make executable
