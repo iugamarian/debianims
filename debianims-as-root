@@ -104,9 +104,9 @@ while [ \$core -lt \$cores ]; do
   swapon -p 5 /dev/zram\$core
   let core=core+1
 done
-theavailableram=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
-theneededfreeram=$((theavailableram/10))
-echo $theneededfreeram > /proc/sys/vm/min_free_kbytes
+theavailableram=\$(awk '/MemTotal/ {print \$2}' /proc/meminfo)
+theneededfreeram=\$((theavailableram/10))
+echo \$theneededfreeram > /proc/sys/vm/min_free_kbytes
 EOF
 chmod +x /usr/bin/zramims
 # Write /etc/rc.local and make executable
