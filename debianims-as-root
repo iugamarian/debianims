@@ -86,6 +86,7 @@ echo "tmpfs           /tmp            tmpfs  nodev,nosuid,mode=1777     0 0" >> 
 # Write /usr/bin/zramims and make executable
 # https://github.com/novaspirit/rpi_zram
 # Using cat requires escaping [[ ` ]] and [[ $ ]] with \
+# https://stackoverflow.com/questions/20348007/how-can-i-find-out-the-total-physical-memory-ram-of-my-linux-box-suitable-to-b
 mkdir -p /usr/bin
 cat <<EOF > /usr/bin/zramims
 #!/bin/bash
@@ -103,13 +104,9 @@ while [ \$core -lt \$cores ]; do
   swapon -p 5 /dev/zram\$core
   let core=core+1
 done
-while true
-do
-  /bin/sleep 8
-  sync
-  # https://unix.stackexchange.com/questions/109496/echo-3-proc-sys-vm-drop-caches-permission-denied-as-root
-  /usr/bin/echo 3 > /proc/sys/vm/drop_caches
-done
+theavailableram=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
+theneededfreeram=$((theavailableram/10))
+echo $theneededfreeram > /proc/sys/vm/min_free_kbytes
 EOF
 chmod +x /usr/bin/zramims
 # Write /etc/rc.local and make executable
