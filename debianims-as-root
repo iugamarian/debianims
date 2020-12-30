@@ -107,7 +107,8 @@ while true
 do
   /bin/sleep 8
   sync
-  echo 3 > /proc/sys/vm/drop_caches
+  # https://unix.stackexchange.com/questions/109496/echo-3-proc-sys-vm-drop-caches-permission-denied-as-root
+  /usr/bin/echo 3 > /proc/sys/vm/drop_caches
 done
 EOF
 chmod +x /usr/bin/zramims
