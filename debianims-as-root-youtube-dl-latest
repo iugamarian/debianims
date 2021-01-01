@@ -1,0 +1,12 @@
+#!/bin/bash
+apt remove --purge -y youtube-dl
+# http://ytdl-org.github.io/youtube-dl/download.html
+# mkdir -p /usr/local/bin/
+rm /usr/local/bin/youtube-dl
+wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+chmod a+rx /usr/local/bin/youtube-dl
+# https://askubuntu.com/questions/942930/usr-bin-env-python-no-such-file-or-directory
+ln -s /usr/local/bin/youtube-dl /usr/bin/youtube-dl
+ln -s /usr/bin/python3 /usr/bin/python
+sync
+# youtube-dl -f mp4/best video-link
