@@ -127,9 +127,9 @@ cat <<EOF > /etc/rc.local
 # Wait for the CPU to rest and for the log files to finish writing.
 /bin/sleep 10
 # Print the IP address
-_IP=$(hostname -I) || true
-if [ "$_IP" ]; then
-  printf "My IP address is %s\n" "$_IP"
+_IP=\$(hostname -I) || true
+if [ "\$_IP" ]; then
+  printf "My IP address is %s\n" "\$_IP"
 fi
 # Start zram swap
 /usr/bin/zramims &
