@@ -106,7 +106,7 @@ while [ \$core -lt \$cores ]; do
 done
 theavailableram=\$(/usr/bin/awk '/MemTotal/ {print \$2}' /proc/meminfo)
 theneededfreeram=\$((theavailableram/10))
-/usr/bin/echo \$theneededfreeram > /proc/sys/vm/min_free_kbytes
+/bin/echo \$theneededfreeram > /proc/sys/vm/min_free_kbytes
 EOF
 chmod +x /usr/bin/zramims
 # Write /etc/rc.local and make executable
