@@ -109,6 +109,19 @@ theneededfreeram=\$((theavailableram/10))
 /bin/echo \$theneededfreeram > /proc/sys/vm/min_free_kbytes
 EOF
 chmod +x /usr/bin/zramims
+# Write /usr/bin/driveinsomniaims and make executable
+cat <<EOF > /usr/bin/driveinsomniaims
+#!/bin/bash
+# Wait for login to print
+/bin/sleep 7
+while true; do
+/bin/sleep 7
+# Add HDD paths to be kept alive here before done and do not add SSD paths:
+# date > /root/driveinsomniaims-date-write
+done
+exit 0
+EOF
+chmod +x /usr/bin/driveinsomniaims
 # Write /etc/rc.local and make executable
 cat <<EOF > /etc/rc.local
 #!/bin/sh -e
@@ -133,6 +146,7 @@ if [ "\$_IP" ]; then
 fi
 # Start zram swap
 /usr/bin/zramims &
+/usr/bin/driveinsomniaims &
 sync
 exit 0
 EOF
