@@ -1,5 +1,20 @@
 For Ubuntu for now:
 
+Launcher example after Firefox install:
+
+Applications -> Internet -> Firefox
+Command:
+/home/pi/scripts/x11-firefox
+
+x11-firefox:
+
+#!/bin/bash
+MOZ_X11_EGL=1 /usr/lib/firefox/firefox
+
+Make it executable
+
+chmod +x /usr/lib/firefox/firefox
+
 First check that vaapi has hardware video decoding support:
 
 sudo -s
