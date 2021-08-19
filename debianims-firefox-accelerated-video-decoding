@@ -9,6 +9,97 @@ vainfo
 
 If yes continue down here:
 
+
+X11 OPTION Firefox 81 onwards:
+
+https://www.linuxuprising.com/2019/12/how-to-install-latest-firefox-non-esr.html
+
+https://forums.overclockers.co.uk/threads/firefox-now-supports-hardware-video-acceleration-youtube-etc.18900661/
+
+0) Install Firefox Unstable which is newer than 81:
+
+sudo nano /etc/apt/sources.list
+
+
+At the end of this file (don't modify anything) add the following line:
+
+deb http://deb.debian.org/debian/ unstable main contrib non-free
+
+
+After adding this, save the file and exit the text editor (if you're using Nano press Ctrl + O followed Enter to save the file, and exit Nano using Ctrl + X).
+
+2. Set a low pin priority for the Debian Unstable repository so your system doesn't automatically install packages from it unless you manually specify this.
+
+Create and open a file /etc/apt/preferences.d/99pin-unstable as root with a text editor, for example using Nano command line text editor:
+
+sudo nano /etc/apt/preferences.d/99pin-unstable
+
+
+Paste the following in this file:
+
+Package: *
+Pin: release a=stable
+Pin-Priority: 900
+
+Package: *
+Pin release a=unstable
+Pin-Priority: 10
+
+
+After adding this, save the file and exit the text editor (if you're using Nano press Ctrl + O, then press Enter to save the file, and exit using Ctrl + X).
+
+3. Install the latest regular (non-ESR) Firefox on Debian 10 Buster (Stable) or Testing (Bullseye).
+
+You can now install the latest normal Firefox on Debian 10 Buster (Stable) or Bullseye (Testing):
+
+sudo apt update
+sudo apt install -t unstable firefox
+
+
+
+In case anyone didn't know, Firefox now finally supports (>v80) hardware video acceleration/decoding on the web,
+including YouTube etc. This is VAAPI only for now, and works on both Wayland and X11 - though I've found the latter
+far more useful. As it's X11 support, this works on basically all Linux distros as well as *BSD and it's been
+flawless for me. I have finally been able to ditch janky ungoogled-chromium installs (patched for VAAPI)
+and just use the built in Firefox packages with no messing. Win! Tested on Debian Buster and Bullseye,
+Arch, Fedora 32 and 33, and FreeBSD.
+
+Steps to activate:
+
+1) Firefox needs launching with MOZ_X11_EGL=1 and you can do this either with the launcher, or set it
+as an environmental variable in /etc/environment or .bashrc/.zshrc/whatever (export MOZ_X11_EGL=1).
+2) Change the following preferences in about:config
+
+    gfx.webrender.all:true
+    media.ffmpeg.dmabuf-textures.enabled:true   <<<----- nu mai este, nu e nevoie
+    media.ffmpeg.vaapi.enabled:true
+    media.ffvpx.enabled:false
+
+3) Install h264ify or enhanced-h264ify as the acceleration is x264-only at the moment. The former addon
+works on all sites including embedded videos. The latter only works on YouTube but does allow disabling
+of volume normalisation and allows you to choose which codecs to allow/disable. Swings and roundabouts.
+
+You will need to have the appropriate hardware drivers for your platform (eg i965 for Intel iGPU,
+amdgpu+mesa for AMD) as well as the libva and vaapi packages for your platform (libva, libva-intel-driver
+or similar depending on your hardware). You can test that you're set with vainfo - the package is either
+called vainfo or libva-utils depending on distro/platform. If vainfo gives a non-error output (i.e. a list
+of codecs it can decode and encode) you're set.
+
+You can test that it's working by launching Firefox with MOZ_LOG="PlatformDecoderModule:5" - for example
+by running MOZ_LOG="PlatformDecoderModule:5" firefox in a terminal. While this does restrict you to x264
+(and thus 1080p) on YouTube, it's great for low powered laptops etc running on battery (not so much on my
+Threadripper desktop system, but meh). YMMV but it's pretty easy to get working and the Arch Wiki has some
+distro-agnostic info if you get stuck.
+
+Last edited: 28 Sep 2020
+
+Just to say in this thread although the video acceleration requires > 80 you can still set gfx.webrender.all
+to True in earlier versions and it greatly speeds up Firefox. Works perfectly in 78 ESR.
+
+
+
+WAILAND OPTION:
+
 1) Need to use Gnome in Wayland
 
 https://linuxconfig.org/how-to-enable-disable-wayland-on-ubuntu-20-04-desktop
