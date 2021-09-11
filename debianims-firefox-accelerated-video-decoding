@@ -217,7 +217,10 @@ mkdir -p ~/.config/environment.d
 touch ~/.config/environment.d/60_firefox.conf
 echo MOZ_ENABLE_WAYLAND=1 >>~/.config/environment.d/60_firefox.conf
 
-LOG out and back in again to have an effect!!!
+#############################################################################################################
+LOG out and back in again or restart after adding in .config/environment.d/60_firefox.conf to have an effect
+#############################################################################################################
+about:support - Window Protocol should show Wayland
 
 If you don’t set the the variable globally and just create a local .desktop file then links from e.g. Thunderbird or Polari won’t open because it tries to open an XWayland-Firefox instance in addtion to the Wayland one, which results in an error message.
 
@@ -243,6 +246,10 @@ https://addons.mozilla.org/ro/firefox/addon/h264ify/
 mkdir -p ~/.config/environment.d
 touch ~/.config/environment.d/60_firefox.conf
 echo MOZ_ENABLE_WAYLAND=1 >>~/.config/environment.d/60_firefox.conf
+#############################################################################################################
+LOG out and back in again or restart after adding in .config/environment.d/60_firefox.conf to have an effect
+#############################################################################################################
+about:support - Window Protocol should show Wayland
 4) Configure in Firefox about:config :
 widget.wayland-dmabuf-vaapi.enabled = true
 layers.acceleration.force-enabled = true
