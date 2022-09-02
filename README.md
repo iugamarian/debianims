@@ -10,3 +10,7 @@ https://unix.stackexchange.com/questions/499485/how-do-i-use-swap-space-for-emer
 # Make sudo work
 
 echo "%sudo ALL=(ALL) ALL" > /etc/sudoers.d/10-installer
+
+adduser pi sudo
+
+reboot
